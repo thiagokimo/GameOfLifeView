@@ -1,6 +1,7 @@
 package io.kimo.gameoflifeview.view;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -11,6 +12,7 @@ import android.view.Display;
 import android.view.SurfaceView;
 import android.view.WindowManager;
 
+import io.kimo.gameoflifeview.R;
 import io.kimo.gameoflifeview.game.Cell;
 import io.kimo.gameoflifeview.game.World;
 
@@ -19,29 +21,45 @@ import io.kimo.gameoflifeview.game.World;
  */
 public class GameOfLifeView extends SurfaceView implements Runnable {
 
-    public static final int PROPORTION = 50;
+    public static final int DEFAULT_PROPORTION = 50;
+    public static final int DEFAULT_ALIVE_COLOR = Color.BLACK;
+    public static final int DEFAULT_DEAD_COLOR = Color.WHITE;
 
     private Thread thread;
     private boolean isRunning = false;
 
-    private int columnWidth,rowHeight, numberOfColumns, numberOfRows;
-    private Point point;
+    private int columnWidth = 1;
+    private int rowHeight = 1;
+    private int numberOfColumns = 1;
+    private int numberOfRows = 1;
 
     private World world;
 
+    private int proportion = DEFAULT_PROPORTION;
+    private int aliveColor = DEFAULT_ALIVE_COLOR;
+    private int deadColor = DEFAULT_DEAD_COLOR;
+
     public GameOfLifeView(Context context) {
         super(context);
-        init();
+        calculateWorldParams();
     }
 
     public GameOfLifeView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        init();
+
+        TypedArray a = context.getTheme().obtainStyledAttributes(attrs,R.styleable.game_of_life_view, 0, 0);
+        ensureCorrectAttributes(a);
+
+        calculateWorldParams();
     }
 
     public GameOfLifeView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-        init();
+
+        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.game_of_life_view, defStyle, 0);
+        ensureCorrectAttributes(a);
+
+        calculateWorldParams();
     }
 
     @Override
@@ -79,8 +97,8 @@ public class GameOfLifeView extends SurfaceView implements Runnable {
 
     public void reviveCellsAt(float x, float y) {
 
-        int X = (int) (x/PROPORTION);
-        int Y = (int) (y/PROPORTION);
+        int X = (int) (x/ proportion);
+        int Y = (int) (y/ proportion);
 
         while(X >= world.getWidth())
             X--;
@@ -91,22 +109,52 @@ public class GameOfLifeView extends SurfaceView implements Runnable {
         world.revive(X, Y);
     }
 
-    private void init() {
+    public int getProportion() {
+        return proportion;
+    }
+
+    public void setProportion(int proportion) {
+        this.proportion = proportion;
+    }
+
+    public int getAliveColor() {
+        return aliveColor;
+    }
+
+    public void setAliveColor(int aliveColor) {
+        this.aliveColor = aliveColor;
+    }
+
+    public int getDeadColor() {
+        return deadColor;
+    }
+
+    public void setDeadColor(int deadColor) {
+        this.deadColor = deadColor;
+    }
+
+    public int getNumberOfColumns() {
+        return numberOfColumns;
+    }
+
+    public int getNumberOfRows() {
+        return numberOfRows;
+    }
+
+    private void calculateWorldParams() {
         WindowManager wm = (WindowManager) getContext().getSystemService(Context.WINDOW_SERVICE);
         Display display = wm.getDefaultDisplay();
 
-        point = new Point();
+        Point point = new Point();
         display.getSize(point);
 
-        numberOfColumns = point.x / PROPORTION;
-        numberOfRows = point.y / PROPORTION;
+        numberOfColumns = point.x / proportion;
+        numberOfRows = point.y / proportion;
 
         columnWidth = point.x / numberOfColumns;
         rowHeight = point.y / numberOfRows;
 
         world = new World(numberOfColumns, numberOfRows, true);
-
-        resume();
     }
 
     private Canvas drawCells(Canvas canvas) {
@@ -118,12 +166,12 @@ public class GameOfLifeView extends SurfaceView implements Runnable {
             if(cell.isAlive) {
                 r.set((cell.x * columnWidth)-1, (cell.y * rowHeight)-1,
                         (cell.x * columnWidth + columnWidth)-1, (cell.y * rowHeight + rowHeight)-1);
-                p.setColor(Color.BLACK);
+                p.setColor(aliveColor);
             }
             else {
                 r.set((cell.x * columnWidth)-1, (cell.y * rowHeight)-1,
                         (cell.x * columnWidth + columnWidth)-1, (cell.y * rowHeight + rowHeight)-1);
-                p.setColor(Color.WHITE);
+                p.setColor(deadColor);
             }
             canvas.drawRect(r, p);
         }
@@ -131,4 +179,36 @@ public class GameOfLifeView extends SurfaceView implements Runnable {
         return canvas;
     }
 
+    private void ensureCorrectAttributes(TypedArray styles) {
+
+        //ensuring proportion
+        int styledProportion = styles.getInt(R.styleable.game_of_life_view_proportion, 0);
+
+        if(styledProportion > 0) {
+            proportion = styledProportion;
+        } else {
+            throw new IllegalArgumentException("Proportion must be higher than 0.");
+        }
+
+        //ensuring alive color
+        int styledAliveColor = styles.getColor(R.styleable.game_of_life_view_aliveCellColor, -1);
+
+        if(styledAliveColor == -1) {
+            aliveColor = DEFAULT_ALIVE_COLOR;
+        } else {
+            aliveColor = styledAliveColor;
+        }
+
+        //ensuring dead color
+        int styledDeadColor = styles.getColor(R.styleable.game_of_life_view_deadCellColor, -1);
+
+        if(styledDeadColor == -1) {
+            deadColor = DEFAULT_DEAD_COLOR;
+        } else {
+            deadColor = styledDeadColor;
+        }
+
+        styles.recycle();
+
+    }
 }

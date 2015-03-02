@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:game_of_life_view="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <io.kimo.gameoflifeview.view.GameOfLifeView
+        android:id="@+id/game_of_life"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        game_of_life_view:proportion="30"
+        game_of_life_view:aliveCellColor="#FF0000"
+        game_of_life_view:deadCellColor="#0000FF"/>
+</LinearLayout>
