@@ -36,8 +36,8 @@ public class GameOfLifeView extends SurfaceView implements Runnable {
     private World world;
 
     private int proportion = DEFAULT_PROPORTION;
-    private int aliveColor = DEFAULT_ALIVE_COLOR;
-    private int deadColor = DEFAULT_DEAD_COLOR;
+    private int aliveColor;
+    private int deadColor;
 
     public GameOfLifeView(Context context) {
         super(context);
@@ -46,10 +46,6 @@ public class GameOfLifeView extends SurfaceView implements Runnable {
 
     public GameOfLifeView(Context context, AttributeSet attrs) {
         super(context, attrs);
-
-        TypedArray a = context.getTheme().obtainStyledAttributes(attrs,R.styleable.game_of_life_view, 0, 0);
-        ensureCorrectAttributes(a);
-
         calculateWorldParams();
     }
 
@@ -115,6 +111,7 @@ public class GameOfLifeView extends SurfaceView implements Runnable {
 
     public void setProportion(int proportion) {
         this.proportion = proportion;
+        invalidate();
     }
 
     public int getAliveColor() {
@@ -123,6 +120,7 @@ public class GameOfLifeView extends SurfaceView implements Runnable {
 
     public void setAliveColor(int aliveColor) {
         this.aliveColor = aliveColor;
+        invalidate();
     }
 
     public int getDeadColor() {
@@ -131,6 +129,7 @@ public class GameOfLifeView extends SurfaceView implements Runnable {
 
     public void setDeadColor(int deadColor) {
         this.deadColor = deadColor;
+        invalidate();
     }
 
     public int getNumberOfColumns() {
@@ -182,7 +181,7 @@ public class GameOfLifeView extends SurfaceView implements Runnable {
     private void ensureCorrectAttributes(TypedArray styles) {
 
         //ensuring proportion
-        int styledProportion = styles.getInt(R.styleable.game_of_life_view_proportion, 0);
+        int styledProportion = styles.getInt(R.styleable.game_of_life_view_proportion, DEFAULT_PROPORTION);
 
         if(styledProportion > 0) {
             proportion = styledProportion;
@@ -190,25 +189,11 @@ public class GameOfLifeView extends SurfaceView implements Runnable {
             throw new IllegalArgumentException("Proportion must be higher than 0.");
         }
 
-        //ensuring alive color
-        int styledAliveColor = styles.getColor(R.styleable.game_of_life_view_aliveCellColor, -1);
-
-        if(styledAliveColor == -1) {
-            aliveColor = DEFAULT_ALIVE_COLOR;
-        } else {
-            aliveColor = styledAliveColor;
-        }
+        int styledAliveColor = styles.getColor(R.styleable.game_of_life_view_aliveCellColor, DEFAULT_ALIVE_COLOR);
 
         //ensuring dead color
-        int styledDeadColor = styles.getColor(R.styleable.game_of_life_view_deadCellColor, -1);
-
-        if(styledDeadColor == -1) {
-            deadColor = DEFAULT_DEAD_COLOR;
-        } else {
-            deadColor = styledDeadColor;
-        }
+        int styledDeadColor = styles.getColor(R.styleable.game_of_life_view_deadCellColor, DEFAULT_DEAD_COLOR);
 
         styles.recycle();
-
     }
 }
