@@ -36,8 +36,8 @@ public class GameOfLifeView extends SurfaceView implements Runnable {
     private World world;
 
     private int proportion = DEFAULT_PROPORTION;
-    private int aliveColor;
-    private int deadColor;
+    private int aliveColor = DEFAULT_ALIVE_COLOR;
+    private int deadColor = DEFAULT_DEAD_COLOR;
 
     public GameOfLifeView(Context context) {
         super(context);
@@ -46,6 +46,10 @@ public class GameOfLifeView extends SurfaceView implements Runnable {
 
     public GameOfLifeView(Context context, AttributeSet attrs) {
         super(context, attrs);
+
+        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.game_of_life_view, 0, 0);
+        ensureCorrectAttributes(a);
+
         calculateWorldParams();
     }
 
@@ -189,10 +193,8 @@ public class GameOfLifeView extends SurfaceView implements Runnable {
             throw new IllegalArgumentException("Proportion must be higher than 0.");
         }
 
-        int styledAliveColor = styles.getColor(R.styleable.game_of_life_view_aliveCellColor, DEFAULT_ALIVE_COLOR);
-
-        //ensuring dead color
-        int styledDeadColor = styles.getColor(R.styleable.game_of_life_view_deadCellColor, DEFAULT_DEAD_COLOR);
+        aliveColor = styles.getColor(R.styleable.game_of_life_view_aliveCellColor, DEFAULT_ALIVE_COLOR);
+        deadColor = styles.getColor(R.styleable.game_of_life_view_deadCellColor, DEFAULT_DEAD_COLOR);
 
         styles.recycle();
     }
