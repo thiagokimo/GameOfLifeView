@@ -13,9 +13,10 @@
 
     <io.kimo.gameoflifeview.view.GameOfLifeView
         android:id="@+id/game_of_life"
+        android:layout_marginTop="?attr/actionBarSize"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        game_of_life_view:proportion="30"
+        game_of_life_view:proportion="20"
         game_of_life_view:aliveCellColor="#FF0000"
         game_of_life_view:deadCellColor="#0000FF"/>
 

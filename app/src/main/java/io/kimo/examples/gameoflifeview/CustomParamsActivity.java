@@ -12,11 +12,22 @@ public class CustomParamsActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.custom_params);
+        setContentView(R.layout.with_custom_params);
         Utils.configureToolbar(this, true);
         setTitle("Custom Parameters");
 
         gameOfLifeView = (GameOfLifeView) findViewById(R.id.game_of_life);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         gameOfLifeView.resume();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        gameOfLifeView.pause();
     }
 }

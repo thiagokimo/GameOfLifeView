@@ -13,11 +13,22 @@ public class ThroughXMLActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.xml);
+        setContentView(R.layout.with_xml);
         Utils.configureToolbar(this, true);
         setTitle("Through XML");
 
         gameOfLifeView = (GameOfLifeView) findViewById(R.id.game_of_life);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         gameOfLifeView.resume();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        gameOfLifeView.pause();
     }
 }
