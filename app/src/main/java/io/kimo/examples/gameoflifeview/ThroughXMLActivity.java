@@ -23,12 +23,12 @@ public class ThroughXMLActivity extends ActionBarActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        gameOfLifeView.resume();
+        gameOfLifeView.start();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        gameOfLifeView.pause();
+        gameOfLifeView.stop();
     }
 }

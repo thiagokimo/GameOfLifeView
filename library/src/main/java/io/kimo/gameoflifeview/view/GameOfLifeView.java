@@ -75,14 +75,14 @@ public class GameOfLifeView extends SurfaceView implements Runnable {
         }
     }
 
-    public void resume() {
+    public void start() {
         thread = null;
         isRunning = true;
         thread = new Thread(this);
         thread.start();
     }
 
-    public void pause() {
+    public void stop() {
 
         isRunning = false;
         while (true) {
