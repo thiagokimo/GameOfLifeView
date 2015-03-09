@@ -9,7 +9,7 @@ Gradle:
 
 ``` groovy
 dependencies {
-    compile 'com.github.thiagokimo:gameoflifeview:1.0.0'
+    compile 'com.github.thiagokimo:gameoflifeview:1.0.1'
 }
 ```
 
@@ -19,7 +19,7 @@ Maven:
 <dependency>
     <groupId>com.github.thiagokimo</groupId>
     <artifactId>gameoflifeview</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
 </dependency>
 ```
 
