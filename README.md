@@ -69,7 +69,7 @@ Rembember to stop the game once you destroy whoever is holding GameofLifeView:
 ``` java
 @Override
 protected void onDestroy() {
-  super.onResume();
+  super.onDestroy();
   gameOfLifeView.stop();
 }
 ```
