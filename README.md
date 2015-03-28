@@ -1,4 +1,6 @@
 # GameOfLifeView
+[![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-GameOfLifeView-brightgreen.svg?style=flat)](http://android-arsenal.com/details/1/1672)
+
 An Android view that displays Conway's Game of Life.
 
 ![Screenshot](https://raw.githubusercontent.com/thiagokimo/GameOfLifeView/master/images/default.jpg)
