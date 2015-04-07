@@ -11,7 +11,7 @@ Gradle:
 
 ``` groovy
 dependencies {
-    compile 'com.github.thiagokimo:gameoflifeview:1.0.1'
+    compile 'com.github.thiagokimo:gameoflifeview:1.0.2'
 }
 ```
 
@@ -21,7 +21,7 @@ Maven:
 <dependency>
     <groupId>com.github.thiagokimo</groupId>
     <artifactId>gameoflifeview</artifactId>
-    <version>1.0.1</version>
+    <version>1.0.2</version>
 </dependency>
 ```
 
@@ -54,26 +54,10 @@ protected void onCreate(Bundle savedInstanceState) {
 }
 ```
 
-...and run the game with calling **start()**:
+...and run the game with:
 
 ``` java
-@Override
-protected void onResume() {
-  super.onResume();
-  gameOfLifeView.start();
-}
-```
-
-**IMPORTANT**
-
-Rembember to stop the game once you destroy whoever is holding GameofLifeView:
-
-``` java
-@Override
-protected void onDestroy() {
-  super.onDestroy();
-  gameOfLifeView.stop();
-}
+  gameOfLifeView.begin();
 ```
 
 ## Custom params
