@@ -1,7 +1,9 @@
 # GameOfLifeView
 [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-GameOfLifeView-brightgreen.svg?style=flat)](http://android-arsenal.com/details/1/1672)
 
-An Android view that displays Conway's Game of Life.
+This is a custom Android view which displays Conway's Game of Life. I've done to display the results of my learnings of Test Driven Development.
+
+I've done this basically to learn how the process of Test Driven Development works. The custom view itself is just 
 
 ![Screenshot](https://raw.githubusercontent.com/thiagokimo/GameOfLifeView/master/images/default.jpg)
 ![Screenshot](https://raw.githubusercontent.com/thiagokimo/GameOfLifeView/master/images/custom.jpg)
